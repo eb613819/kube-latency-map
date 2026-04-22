@@ -51,6 +51,34 @@ h1 {
 .status.ok { color: #4caf7d; }
 .status.error { color: #e05c5c; }
 
+.matrix-outer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 2rem;
+}
+ 
+.axis-to {
+  font-size: 0.75rem;
+  color: #555;
+  padding-left: 0.5rem;
+}
+ 
+.matrix-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+ 
+.axis-from {
+  font-size: 0.75rem;
+  color: #555;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  padding-top: 0.5rem;
+}
+
 .matrix-wrap {
   overflow-x: auto;
   margin-bottom: 2rem;
