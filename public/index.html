@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kube-latency-map</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>kube-latency-map</h1>
+  <p class="subtitle">HTTP round-trip latency between pods. Diagonal shows loopback baseline</p>
+
+  <div class="controls">
+    <label>Probe interval:</label>
+    <input type="range" id="intervalSlider" min="1" max="60" value="5" step="1">
+    <span id="intervalLabel">5s</span>
+    <span class="status" id="status">connecting...</span>
+  </div>
+
+  <div class="matrix-wrap">
+    <table id="matrix">
+      <thead id="matrixHead"></thead>
+      <tbody id="matrixBody"></tbody>
+    </table>
+  </div>
+
+  <div class="legend">
+    <div class="legend-label">Observed latency scale:</div>
+    <div class="legend-bar-wrap">
+      <span class="legend-min" id="legendMin">—</span>
+      <div class="legend-bar"></div>
+      <span class="legend-max" id="legendMax">—</span>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
