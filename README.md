@@ -5,6 +5,15 @@ A lightweight latency visualization tool for Kubernetes clusters. Deploys one po
 Built as a validation tool for a multi-region k3s cluster, but should work any Kubernetes cluster.
  
 ![latency matrix](./images/screenshot.png)
+
+**Note**: The nodes in this screenshot are each on an Azure VM in one of two regions:
+| Node | Azure Region |
+|--------|-------------|
+| k3s-vm0 | `northcentralus` | 
+| k3s-vm1 | `northcentralus` |
+| k3s-vm2 | `northcentralus` |
+| k3s-vm3 | `mexicocentral` |
+| k3s-vm4 | `mexicocentral` |
  
 ---
  
