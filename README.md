@@ -2,7 +2,7 @@
  
 A lightweight latency visualization tool for Kubernetes clusters. Deploys one pod per node via a DaemonSet, measures HTTP round-trip latency between all pods, and displays the results as a live updating matrix in a web UI.
  
-Built as a validation tool for a multi-region k3s cluster, but should work any Kubernetes cluster.
+Built as a validation tool for a [multi-region k3s cluster](https://github.com/eb613819/multiregion-k3s-azure), but should work any Kubernetes cluster.
  
 ![latency matrix](./images/screenshot.png)
 
