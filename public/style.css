@@ -117,7 +117,6 @@ td.unreachable {
   height: 12px;
   width: 240px;
   border-radius: 2px;
-  background: linear-gradient(to right, #1a3a1a, #3a3a1a, #3a1a1a);
 }
 
 .legend-min, .legend-max {

@@ -3,17 +3,18 @@ const REFRESH_MS = 3000; //how often to poll /aggregate
 let historicMin = Infinity;
 let historicMax = -Infinity;
 
+const COLOR_STOPS = [
+  [30, 120, 30],    // green  — low latency
+  [160, 140, 30],   // yellow — mid latency
+  [160, 40, 40],    // red    — high latency
+];
+
 function interpolateColor(t) {
-  const colors = [
-    [26, 58, 26],   // #1a3a1a green
-    [58, 58, 26],   // #3a3a1a yellow
-    [58, 26, 26],   // #3a1a1a red
-  ];
-  const scaled = t * (colors.length - 1);
-  const i = Math.min(Math.floor(scaled), colors.length - 2);
+  const scaled = t * (COLOR_STOPS.length - 1);
+  const i = Math.min(Math.floor(scaled), COLOR_STOPS.length - 2);
   const f = scaled - i;
-  const c = colors[i].map((start, idx) =>
-    Math.round(start + f * (colors[i + 1][idx] - start))
+  const c = COLOR_STOPS[i].map((start, idx) =>
+    Math.round(start + f * (COLOR_STOPS[i + 1][idx] - start))
   );
   return `rgb(${c[0]}, ${c[1]}, ${c[2]})`;
 }
@@ -23,6 +24,12 @@ function latencyColor(ms) {
   if (historicMin === historicMax) return interpolateColor(0.5);
   const t = (ms - historicMin) / (historicMax - historicMin);
   return interpolateColor(Math.max(0, Math.min(1, t)));
+}
+
+function initLegendBar() {
+  const stops = COLOR_STOPS.map(c => `rgb(${c.join(',')})`);
+  document.querySelector('.legend-bar').style.background =
+    `linear-gradient(to right, ${stops.join(', ')})`;
 }
 
 //only include pods that have reported their own metrics
@@ -163,5 +170,6 @@ slider.addEventListener('input', () => {
 });
 
 // start
+initLegendBar();
 refresh();
 setInterval(refresh, REFRESH_MS);
