@@ -17,7 +17,7 @@ spec:
       serviceAccountName: kube-latency-map
       containers:
         - name: kube-latency-map
-          image: eb613819/kube-latency-map:dev
+          image: eb613819/kube-latency-map:1.0.0
           ports:
             - containerPort: 3000
           env:
