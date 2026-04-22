@@ -1,6 +1,6 @@
 # kube-latency-map
  
-A lightweight latency visualization tool for Kubernetes clusters. Deploys one pod per node via a DaemonSet, measures HTTP round-trip latency between all pods, and displays the results as a live updating matrix in a web UI.
+A lightweight latency visualization tool for Kubernetes clusters. Deploys one pod per node via a DaemonSet, measures HTTP round-trip latency between all pods, and displays the results as a live updating matrix in a web UI. Since it is a DaemonSet, there is exactly one pod per node and the matrix rows and columns are labeled by node name rather than pod name.
  
 Built as a validation tool for a [multi-region k3s cluster](https://github.com/eb613819/multiregion-k3s-azure), but should work on any Kubernetes cluster.
  
@@ -19,7 +19,9 @@ Built as a validation tool for a [multi-region k3s cluster](https://github.com/e
  
 ## How It Works
  
-Each pod runs the same Node.js application. On startup, each pod queries the Kubernetes API to discover its peers, then probes each of them over HTTP every 5 seconds (configurable). Any pod can serve the dashboard. Each pod fetches measurements from all peers, combines them with its own, and renders the full matrix.
+Each pod runs the same Node.js application. On startup, each pod queries the Kubernetes API to discover its peers, then probes each of them over HTTP every 5 seconds (configurable). Any pod can serve the dashboard. When you open the UI, that pod requests measurements from all its peers on demand and renders the full matrix.
+
+The matrix is labeled by node name. Node names are the Kubernetes node names, which k3s takes directly from the VM hostname. On the Azure cluster above this means labels match the VM names (`k3s-vm0`, `k3s-vm1`, etc.).
  
 Latency is measured as HTTP round-trip time rather than ICMP ping. ICMP requires `NET_RAW` capability which is restricted in most clusters by default. HTTP overhead is consistent across all measurements so relative differences between pods remain meaningful, but absolute values will be slightly higher than raw network latency. The diagonal of the matrix shows each pod's loopback RTT (a probe to itself) which can be used as a **rough** baseline for the HTTP overhead on that node.
  
