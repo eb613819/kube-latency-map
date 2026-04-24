@@ -23,7 +23,7 @@ Each pod runs the same Node.js application. On startup, each pod queries the Kub
 
 The matrix is labeled by node name. Node names are the Kubernetes node names, which k3s takes directly from the VM hostname. On the Azure cluster above this means labels match the VM names (`k3s-vm0`, `k3s-vm1`, etc.).
  
-Latency is measured as HTTP round-trip time rather than ICMP ping. ICMP requires `NET_RAW` capability which is restricted in most clusters by default. HTTP overhead is consistent across all measurements so relative differences between pods remain meaningful, but absolute values will be slightly higher than raw network latency. The diagonal of the matrix shows each pod's loopback RTT (a probe to itself) which can be used as a **rough** baseline for the HTTP overhead on that node.
+Latency is measured as HTTP round-trip time rather than ICMP ping. ICMP requires `NET_RAW` capability which is restricted in most clusters by default. HTTP overhead is consistent across all measurements so relative differences between pods remain meaningful, but absolute values will be slightly higher than raw network latency. The diagonal of the matrix shows each node's loopback RTT (a probe to itself) which can be used as a **rough** baseline for the HTTP overhead on that node.
  
 ---
  
@@ -51,6 +51,7 @@ kubectl apply -f k8s/serviceaccount.yaml
 kubectl apply -f k8s/rbac.yaml
 kubectl apply -f k8s/daemonset.yaml
 ```
+**Note**: The manifests deploy to the `default` namespace.
  
 Watch the pods come up:
  
@@ -63,6 +64,7 @@ Once all pods are `Running`, open the UI by hitting port `30080` on any node's p
 ```
 http://<any-node-ip>:30080
 ```
+**Note**: Port `30080` must be open in your cluster's firewall or security group rules. On cloud VMs this typically requires an explicit inbound rule allowing TCP traffic on port 30080.
  
 ---
  
